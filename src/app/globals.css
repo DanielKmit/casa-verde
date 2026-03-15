@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+  --color-forest: #1B4332;
+  --color-forest-light: #2D6A4F;
+  --color-gold: #D4A053;
+  --color-gold-light: #E4BC7B;
+  --color-paprika: #8B2500;
+  --color-linen: #FBF7F0;
+  --color-linen-dark: #F0E8D8;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-linen);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 4px;
+}
+
+/* Reservation form date/time inputs */
+input[type="date"],
+input[type="time"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(23%) sepia(34%) saturate(731%) hue-rotate(107deg) brightness(96%) contrast(91%);
+  cursor: pointer;
+}

@@ -1,20 +1,39 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Image from "next/image";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
+
+function RevealDiv({
+  children,
+  className = "",
+  from = "left",
+}: {
+  children: React.ReactNode;
+  className?: string;
+  from?: "left" | "right" | "up";
+}) {
+  const { ref, isVisible } = useScrollReveal();
+  const transforms = { left: "translateX(-40px)", right: "translateX(40px)", up: "translateY(30px)" };
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "none" : transforms[from],
+        transition: "opacity 0.8s ease, transform 0.8s ease",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
 
 export default function Story() {
   return (
     <section id="story" className="py-24 px-6">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-        {/* Image */}
-        <motion.div
-          initial={{ opacity: 0, x: -40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
-          className="relative"
-        >
+        <RevealDiv from="left" className="relative">
           <div className="relative aspect-[4/5] rounded-sm overflow-hidden">
             <Image
               src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80"
@@ -24,17 +43,10 @@ export default function Story() {
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
-          {/* Decorative frame */}
           <div className="absolute -bottom-4 -right-4 w-full h-full border-2 border-gold/30 rounded-sm -z-10" />
-        </motion.div>
+        </RevealDiv>
 
-        {/* Text */}
-        <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
-        >
+        <RevealDiv from="right">
           <p className="text-gold text-sm uppercase tracking-[0.2em] mb-3 font-body">
             Our Story
           </p>
@@ -66,7 +78,7 @@ export default function Story() {
               &ldquo;Every dish tells a story of our family&rdquo;
             </p>
           </div>
-        </motion.div>
+        </RevealDiv>
       </div>
     </section>
   );

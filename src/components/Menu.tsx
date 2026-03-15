@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 type MenuItem = { name: string; desc: string; price: string };
 
@@ -40,15 +41,19 @@ const tabs = Object.keys(menuData);
 
 export default function Menu() {
   const [active, setActive] = useState("Tapas");
+  const { ref: headerRef, isVisible: headerVisible } = useScrollReveal();
 
   return (
     <section id="menu" className="py-24 px-6 bg-forest">
       <div className="max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+        <div
+          ref={headerRef}
           className="text-center mb-12"
+          style={{
+            opacity: headerVisible ? 1 : 0,
+            transform: headerVisible ? "none" : "translateY(20px)",
+            transition: "opacity 0.6s ease, transform 0.6s ease",
+          }}
         >
           <p className="text-gold text-sm uppercase tracking-[0.2em] mb-3 font-body">
             The Menu
@@ -56,7 +61,7 @@ export default function Menu() {
           <h2 className="font-heading text-4xl md:text-5xl text-linen">
             A Taste of Andalucía
           </h2>
-        </motion.div>
+        </div>
 
         {/* Tabs */}
         <div className="flex justify-center gap-2 md:gap-6 mb-12 flex-wrap">

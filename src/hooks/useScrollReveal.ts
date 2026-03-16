@@ -13,9 +13,9 @@ export function useScrollReveal() {
       return;
     }
 
-    // Above fold → show immediately
+    // Above fold or near viewport → show immediately
     const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight * 0.9) {
+    if (rect.top < window.innerHeight * 1.1) {
       setIsVisible(true);
       return;
     }
@@ -27,12 +27,12 @@ export function useScrollReveal() {
           observer.disconnect();
         }
       },
-      { threshold: 0.05 }
+      { threshold: 0.02, rootMargin: "100px 0px" }
     );
     observer.observe(el);
 
-    // Safety fallback
-    const timer = setTimeout(() => setIsVisible(true), 5000);
+    // Safety fallback — shorter timeout
+    const timer = setTimeout(() => setIsVisible(true), 2000);
 
     return () => {
       observer.disconnect();

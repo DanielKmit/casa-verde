@@ -33,7 +33,7 @@ export default function Navbar() {
       transition={{ duration: 0.6 }}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <a href="#" className="font-heading text-2xl text-linen tracking-wide">
+        <a href="/" className="font-heading text-2xl text-linen tracking-wide">
           Casa Verde
         </a>
 
